@@ -57,7 +57,6 @@ class Node {
   }
 }
 
+export default Node; // Ensure this line is present
 
-
-
-
+// module.exports = Node;

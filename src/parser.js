@@ -1,4 +1,6 @@
 import Node from './node.js'; // Import the Node class
+// const Node = require('./Node'); // CommonJS syntax to import Node class
+
   
 function tokenize(rule) {
   const regex = /\s*(\(|\)|AND|OR|>|<|>=|<=|==|!=|'[^']*'|[a-zA-Z_]\w*|\d+)\s*/g;   // global flag allows exec to NOT get stuk in inf loop
