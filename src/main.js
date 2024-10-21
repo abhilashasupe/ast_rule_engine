@@ -1,53 +1,44 @@
-import express from 'express'; // Use import for ES module
-import connectDB from './connect.js'; // Import the MongoDB connection function
-// import ast_model from './astSchema.js';   // AST model
-import { parseRule } from './parser.js'; // Import the parseRule function
-import ast_rule from './schema.js'; // Import the mongoose schema
-import { fetchRule } from './controller.js'; // Import the fetchRule controller
-import dotenv from 'dotenv';
-dotenv.config(); // Load environment variables from .env file
+import express from 'express'; 
+import connectDB from './connect.js'; 
+import { insertAstToDB, fetchRule } from './controller.js'; 
 
-const app = express(); // Create an Express application
+import dotenv from 'dotenv';
+dotenv.config(); 
+const app = express();
 app.use(express.json());
 
-// Define a route handler for the root URL ('/')
 app.get('/', (req, res) => {
-  res.send('Hello World'); // Send 'Hello World' response
+  res.send('Hello World'); 
 });
 
+app.post('/insert-rule', async (req, res) => {
+  const { astString, ruleName } = req.body;
+  try {
+    await insertAstToDB(astString, ruleName); 
+    res.status(200).json({ message: `AST for rule "${ruleName}" inserted successfully` });
+  } catch (error) {
+    // console.error('Error inserting AST:', error);
+    res.status(500).json({ message: 'Error inserting AST', error: error.message });
+  }
+});
 
-const insertAstToDB = async (rule, ruleName) => {
-    try {
-    //   const tokens = tokenize(rule); // Tokenize the rule
-      const ast = parseRule(rule); // Parse the AST
-  
-      // Stringify the AST
-      const astString = JSON.stringify(ast);
-  
-      // Create a new AST document
-      const newAst = new ast_rule({
-        ruleName,
-        astString
-      });
-  
-      // Save to database
-      await newAst.save();
-      console.log(`AST for rule "${ruleName}" saved successfully.`);
-    } catch (err) {
-      console.error('Error saving AST:', err);
-    }
-  };
-  
-  // Example usage
-  const rule = "((age > 30 AND department == 'Sales') OR (age < 25 AND department == 'Marketing')) AND (salary > 50000 OR experience > 5)";
-  insertAstToDB(rule, "Sample Rule");
+app.post('/evaluate-rule', async (req, res) => {
+    const { userData, ruleName } = req.body;
+    try{
+        const { ast, isEligible}  = await fetchRule(ruleName, userData); 
+        // console.log("Fetched AST:", ast);
+        // console.log("This data is eligible if true:", isEligible);
+        res.status(200).json({ message: ` is eligible : ` , isEligible });
+      }catch(error) {
+          // console.error('Error testing eligibility:', error);
+          res.status(500).json({ message: 'Error fetching rule ', error: error.message });
+      }
+});
+ 
 
-
-// Set the app to listen on port 3333
 const PORT = 3333;
 const run = async()=>{
     try{
-        // await connectDB(process.env.MONGO_URI)
         await connectDB (process.env.MONGO_URI);
         app.listen(PORT,()=>{
             console.log("server is running on port : ", PORT)            

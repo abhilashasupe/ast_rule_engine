@@ -1,5 +1,4 @@
-import Node from './node.js'; // Import the Node class
-
+import Node from './node.js'; 
   
 function tokenize(rule) {
   const regex = /\s*(\(|\)|AND|OR|>|<|>=|<=|==|!=|'[^']*'|[a-zA-Z_]\w*|\d+)\s*/g;   // global flag allows exec to NOT get stuk in inf loop
@@ -58,23 +57,9 @@ function parseExpression(tokens, index = 0) {
   return [current, index];
 }
 
-// Test with a rule
-const rule = "((age > 30 AND department == 'Sales') OR (age < 25 AND department == 'Marketing')) AND (salary > 50000 OR experience > 5)";
-const tokens = tokenize(rule);
-const [ast, _] = parseExpression(tokens);
-
-//   console.log(ast)
-// console.log(JSON.stringify(ast, null, 2));
-
-// Example user data
-const userData = { age: 9, department: 'Marketing', salary: 600, experience: 4 };
-
-// Evaluate the AST with the user data
-console.log(ast.evaluate(userData)); // Output: true
-
 
 export function parseRule(rule) {
   const tokens = tokenize(rule);
   const [ast, _] = parseExpression(tokens,0);
-  return ast; // Return the AST
+  return ast; 
 }
