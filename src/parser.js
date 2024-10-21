@@ -1,5 +1,4 @@
 import Node from './node.js'; // Import the Node class
-// const Node = require('./Node'); // CommonJS syntax to import Node class
 
   
 function tokenize(rule) {
@@ -72,3 +71,10 @@ const userData = { age: 9, department: 'Marketing', salary: 600, experience: 4 }
 
 // Evaluate the AST with the user data
 console.log(ast.evaluate(userData)); // Output: true
+
+
+export function parseRule(rule) {
+  const tokens = tokenize(rule);
+  const [ast, _] = parseExpression(tokens,0);
+  return ast; // Return the AST
+}
