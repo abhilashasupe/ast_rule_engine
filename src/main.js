@@ -1,6 +1,6 @@
 import express from 'express'; 
 import connectDB from './connect.js'; 
-import { insertAstToDB, fetchRule } from './controller.js'; 
+import { insertAstToDB, evaluateRule , combineRules } from './controller.js'; 
 
 import dotenv from 'dotenv';
 dotenv.config(); 
@@ -25,14 +25,24 @@ app.post('/insert-rule', async (req, res) => {
 app.post('/evaluate-rule', async (req, res) => {
     const { userData, ruleName } = req.body;
     try{
-        const { ast, isEligible}  = await fetchRule(ruleName, userData); 
+        const { ast, isEligible}  = await evaluateRule(ruleName, userData); 
         // console.log("Fetched AST:", ast);
         // console.log("This data is eligible if true:", isEligible);
         res.status(200).json({ message: ` is eligible : ` , isEligible });
       }catch(error) {
-          // console.error('Error testing eligibility:', error);
           res.status(500).json({ message: 'Error fetching rule ', error: error.message });
       }
+});
+
+
+app.post('/combine-rules', async (req, res) => {
+  const { ruleName1, ruleName2, operator, newRuleName } = req.body;
+  try{
+      await combineRules(ruleName1, ruleName2, operator, newRuleName); 
+      res.status(200).json({ message: ` rules combined successfully ` });
+    }catch(error) {
+        res.status(500).json({ message: 'Error combining rules ', error: error.message });
+    }
 });
  
 
