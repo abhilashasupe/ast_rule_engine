@@ -20,7 +20,7 @@ The Rule Engine is a simple 3-tier application with a **frontend UI**, **API bac
 - Each rule is represented as an AST with nodes that represent either an **operand** (a condition) or an **operator** (AND/OR).
   
 Example of a node in the AST:
-```json
+json
 {
   "type": "operator",
   "operator": "AND",
@@ -50,7 +50,7 @@ Example of a node in the AST:
   
 #### Schema Example
 
-```json
+
 {
   "ruleName": "example_rule",
   "astString": "{\"type\":\"operator\",\"left\":{\"type\":\"operand\",\"field\":\"age\",\"comparator\":\">\",\"value\":30},\"right\":{\"type\":\"operand\",\"field\":\"salary\",\"comparator\":\">\",\"value\":50000},\"operator\":\"AND\"}"
