@@ -1,7 +1,7 @@
 import ast_rule from "../models/schema.js";
 import { parseRule } from "../utils/parser.js";
 
-const insertAstToDB = async (req, res) => {
+const createRule = async (req, res) => {
   const { rule, ruleName } = req.body;
   try {
     const ast = parseRule(rule);
@@ -13,7 +13,6 @@ const insertAstToDB = async (req, res) => {
     });
 
     await newAst.save();
-    console.log(`AST for rule "${ruleName}" saved successfully.`);
     res.status(200).json({ message: `AST for rule "${ruleName}" inserted successfully` });
   } catch (err) {
     console.error("Error saving AST:", err);
@@ -35,8 +34,7 @@ const fetchRule = async (ruleName) => {
 };
 
 const evaluateRule = async (req, res) => {
-      const { userData, ruleName } = req.body;
-
+    const { userData, ruleName } = req.body;
   try {
     const ast = await fetchRule(ruleName);
     if (!ast) {
@@ -44,9 +42,8 @@ const evaluateRule = async (req, res) => {
     }
     const isEligible = evaluate(ast, userData);
     
-    res.send(isEligible).status(200).json({ message: ` is eligible : ` , isEligible });
+    res.send(isEligible).status(200);
   } catch (error) {
-    console.error("Error evaluating rule:", error);
     res.status(500).json({ message: 'Error fetching rule ', error: error.message });
     throw error;
   }
@@ -111,9 +108,6 @@ const combineRules = async (req, res) => {
     if (!ast2) {
       throw new Error(`Rule name "${ruleName2}" not fetched.`);
     }
-    // console.log("ast1 : ", ast1);
-    // console.log("ast2 : ", ast2);
-
     const newRule = {
       type: "operator",
       left: ast1,
@@ -121,7 +115,6 @@ const combineRules = async (req, res) => {
       operator: operator,
     };
     const astString = JSON.stringify(newRule);
-``
     const newAst = new ast_rule({
       ruleName : newRuleName,
       astString,
@@ -133,12 +126,10 @@ const combineRules = async (req, res) => {
       // console.log(" Combined rule inserted successfully: ");
     } catch (error) {
       res.status(500).json({ message: 'Error inserting combined rules ', error: error.message });
-      console.log("Error inserting combined rule : ", error);
     }
   } catch (error) {
     res.status(500).json({ message: 'Error combining rules ', error: error.message });
-    console.log("Error combining rules : ", error);
   }
 };
 
-export { insertAstToDB, evaluateRule, combineRules };
+export { createRule, evaluateRule, combineRules };
