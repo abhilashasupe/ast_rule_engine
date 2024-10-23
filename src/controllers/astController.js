@@ -4,6 +4,9 @@ import { parseRule } from "../utils/parser.js";
 const createRule = async (req, res) => {
   const { rule, ruleName } = req.body;
   try {
+    if (!rule || !ruleName) {
+      throw new Error("Rule and rule name are required.");
+    }
     const ast = parseRule(rule);
     const astString = JSON.stringify(ast);
 
@@ -132,4 +135,23 @@ const combineRules = async (req, res) => {
   }
 };
 
-export { createRule, evaluateRule, combineRules };
+const updateRule = async (req, res) => {
+  const { ruleName, updatedRule } = req.body;
+  try {
+    const existingRule = await ast_rule.findOne({ ruleName });
+    if (!existingRule) {
+      throw new Error(`Rule "${ruleName}" not found.`);
+    }
+
+    const parsedUpdatedRule = parseRule(updatedRule);
+    console.log("p : ",parsedUpdatedRule)  
+    existingRule.astString = JSON.stringify(parsedUpdatedRule);
+
+    await existingRule.save();
+    res.status(200).json({ message: `Rule "${ruleName}" updated successfully.` });
+  } catch (err) {
+    res.status(500).json({ message: "Error updating rule: " + err.message });
+  }
+};
+
+export { createRule, evaluateRule, combineRules , updateRule };

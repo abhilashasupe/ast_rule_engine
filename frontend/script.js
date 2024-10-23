@@ -3,6 +3,7 @@ document.getElementById("insertRuleForm").addEventListener("submit", async funct
 
     const ruleName = document.getElementById("ruleName").value;
     const rule = document.getElementById("rule").value;
+    const messageElement = document.getElementById("insertRuleMessage");
 
     try {
         const response = await fetch("http://localhost:3333/create-rule", {
@@ -17,9 +18,11 @@ document.getElementById("insertRuleForm").addEventListener("submit", async funct
         });
 
         const data = await response.json();
-        console.log("Rule inserted:", data);
+        messageElement.textContent = `Success: ${data.message}`;
+        messageElement.style.color = "green";
     } catch (error) {
-        console.error("Error inserting rule:", error);
+        messageElement.textContent = "Error inserting rule: " + error;
+        messageElement.style.color = "red";
     }
 });
 
@@ -28,9 +31,10 @@ document.getElementById("compareRuleForm").addEventListener("submit", async func
 
     const ruleToCompare = document.getElementById("ruleToCompare").value;
     const userData = JSON.parse(document.getElementById("userData").value);
+    const messageElement = document.getElementById("compareResultMessage");
 
     try {
-        const response = await fetch(`http://localhost:3333/evaluate-rule`, {
+        const response = await fetch("http://localhost:3333/evaluate-rule", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -42,9 +46,11 @@ document.getElementById("compareRuleForm").addEventListener("submit", async func
         });
 
         const result = await response.json();
-        console.log("Comparison result:", result);
+        messageElement.textContent = `Comparison result: User is eligible - ${result}`;
+        messageElement.style.color = "green";
     } catch (error) {
-        console.error("Error comparing rule:", error);
+        messageElement.textContent = "Error comparing rule: " + error;
+        messageElement.style.color = "red";
     }
 });
 
@@ -55,6 +61,7 @@ document.getElementById("combineRulesForm").addEventListener("submit", async fun
     const secondRule = document.getElementById("secondRule").value;
     const newRuleName = document.getElementById("newRuleName").value;
     const operator = document.getElementById("operator").value;
+    const messageElement = document.getElementById("combineRulesMessage");
 
     try {
         const response = await fetch("http://localhost:3333/combine-rules", {
@@ -71,8 +78,36 @@ document.getElementById("combineRulesForm").addEventListener("submit", async fun
         });
 
         const data = await response.json();
-        console.log("Rules combined:", data);
+        messageElement.textContent = `Success: ${data.message}`;
+        messageElement.style.color = "green";
     } catch (error) {
-        console.error("Error combining rules:", error);
+        messageElement.textContent = "Error combining rules: " + error;
+        messageElement.style.color = "red";
     }
 });
+
+document.getElementById("updateRuleForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const ruleName = document.getElementById("updateRuleName").value;
+    const updatedRule = document.getElementById("updatedRule").value;
+
+    try {
+        const response = await fetch("http://localhost:3333/update-rule", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                ruleName: ruleName,
+                updatedRule: updatedRule
+            }),
+        });
+
+        const data = await response.json();
+        document.getElementById("updateRuleMessage").textContent = `Rule update status: ${data.message}`;
+    } catch (error) {
+        document.getElementById("updateRuleMessage").textContent = `Error updating rule: ${error.message}`;
+    }
+});
+

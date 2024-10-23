@@ -2,52 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rule Engine</title>
+    <title>AST Rule Engine</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Insert a Rule</h1>
-    <form id="insertRuleForm">
-        <label for="ruleName">Rule Name:</label>
-        <input type="text" id="ruleName" name="ruleName" required>
-        <br>
-        <label for="rule">Rule:</label>
-        <textarea id="rule" name="rule" required></textarea>
-        <br>
-        <button type="submit">Insert Rule</button>
-    </form>
+    <div class="container">
+        <h1>Insert Rule</h1>
+        <form id="insertRuleForm">
+            <label for="ruleName">Rule Name:</label>
+            <input type="text" id="ruleName" name="ruleName" required>
+            <br>
+            <label for="rule">Rule:</label>
+            <input type="text" id="rule" name="rule" required>
+            <br>
+            <button type="submit">Insert Rule</button>
+        </form>
+        <div id="insertRuleMessage" class="message"></div>
 
-    <h1>Compare Values</h1>
-    <form id="compareRuleForm">
-        <label for="ruleToCompare">Rule Name to Compare:</label>
-        <input type="text" id="ruleToCompare" name="ruleToCompare" required>
-        <br>
-        <label for="userData">User Data (JSON format):</label>
-        <textarea id="userData" name="userData" required></textarea>
-        <br>
-        <button type="submit">Compare Rule</button>
-    </form>
+        <hr>
 
-    <h1>Combine Two Rules</h1>
-    <form id="combineRulesForm">
-        <label for="firstRule">First Rule Name:</label>
-        <input type="text" id="firstRule" name="firstRule" required>
-        <br>
-        <label for="secondRule">Second Rule Name:</label>
-        <input type="text" id="secondRule" name="secondRule" required>
-        <br>
-        <label for="newRuleName">New Rule Name:</label>
-        <input type="text" id="newRuleName" name="newRuleName" required>
-        <br>
-        <label for="operator">Operator (AND/OR):</label>
-        <select id="operator" name="operator" required>
-            <option value="AND">AND</option>
-            <option value="OR">OR</option>
-        </select>
-        <br>
-        <button type="submit">Combine Rules</button>
+        <h1>Compare Rule</h1>
+        <form id="compareRuleForm">
+            <label for="ruleToCompare">Rule Name to Compare:</label>
+            <input type="text" id="ruleToCompare" name="ruleToCompare" required>
+            <br>
+            <label for="userData">User Data (JSON):</label>
+            <textarea id="userData" name="userData" required></textarea>
+            <br>
+            <button type="submit">Compare Rule</button>
+        </form>
+        <div id="compareResultMessage" class="message"></div>
+
+        <hr>
+
+        <h1>Combine Rules</h1>
+        <form id="combineRulesForm">
+            <label for="firstRule">First Rule Name:</label>
+            <input type="text" id="firstRule" name="firstRule" required>
+            <br>
+            <label for="secondRule">Second Rule Name:</label>
+            <input type="text" id="secondRule" name="secondRule" required>
+            <br>
+            <label for="operator">Operator (AND/OR):</label>
+            <input type="text" id="operator" name="operator" required>
+            <br>
+            <label for="newRuleName">New Rule Name:</label>
+            <input type="text" id="newRuleName" name="newRuleName" required>
+            <br>
+            <button type="submit">Combine Rules</button>
+        </form>
+        <div id="combineRulesMessage" class="message"></div>
+    </div>
+
+<section id="updateRuleSection">
+    <h2>Update Rule</h2>
+    <form id="updateRuleForm">
+      <div>
+        <label for="updateRuleName">Rule Name:</label>
+        <input type="text" id="updateRuleName" name="updateRuleName" placeholder="Enter existing rule name" required />
+      </div>
+      <div>
+        <label for="updatedRule">New rule : </label>
+        <input type="text" id="updatedRule" name="updatedRule" placeholder="Enter new rule : " />
+      </div>
+      <button type="submit">Update Rule</button>
     </form>
+    <p id="updateRuleMessage"></p>
+  </section>
+  
 
     <script src="script.js"></script>
 </body>
