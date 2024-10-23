@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="util.js"></script> -->
+    <title>AST Rule Engine</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Insert AST Rule</h1>
+        <form id="ruleForm">
+            <label for="ruleName">Rule Name:</label>
+            <input type="text" id="ruleName" name="ruleName" required>
+
+            <label for="rule">Rule:</label>
+            <textarea id="rule" name="rule" rows="4" required></textarea>
+
+            <button type="submit">Submit Rule</button>
+        </form>
+
+        <div class="message" id="message"></div>
+    </div>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AST Rule Engine</title>
+    <style>
+        /* Your existing CSS */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Insert AST Rule</h1>
+        <form id="ruleForm">
+            <label for="ruleName">Rule Name:</label>
+            <input type="text" id="ruleName" name="ruleName" required>
+
+            <label for="rule">Rule:</label>
+            <textarea id="rule" name="rule" rows="4" required></textarea>
+
+            <button type="submit">Submit Rule</button>
+        </form>
+
+        <div class="message" id="message"></div>
+    </div>
+
+    <!-- Move the script here, at the end of body -->
+    <script>
+        document.getElementById('ruleForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Prevent form from refreshing the page
+
+            // Get form data
+            const ruleName = document.getElementById('ruleName').value;
+            const rule = document.getElementById('rule').value;
+
+            const messageDiv = document.getElementById('message');
+
+            // Reset message div
+            messageDiv.innerHTML = '';
+
+            try {
+                // Make a POST request to your backend
+                const response = await fetch('http://localhost:3333/insert-rule', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ruleName: ruleName,
+                        rule: rule
+                    })
+                });
+
+                const data = await response.json();
+
+                // Show success or error message
+                if (response.ok) {
+                    messageDiv.innerHTML = `<p class="success">${data.message}</p>`;
+                } else {
+                    messageDiv.innerHTML = `<p class="error">Error: ${data.message}</p>`;
+                }
+            } catch (error) {
+                console.error('Error submitting rule:', error);
+                messageDiv.innerHTML = '<p class="error">Failed to submit rule. Please try again.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+</body>
+</html>
