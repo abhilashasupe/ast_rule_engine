@@ -53,23 +53,23 @@
             <button type="submit">Combine Rules</button>
         </form>
         <div id="combineRulesMessage" class="message"></div>
+        <section id="updateRuleSection">
+            <h2>Update Rule</h2>
+            <form id="updateRuleForm">
+              <div>
+                <label for="updateRuleName">Rule Name:</label>
+                <input type="text" id="updateRuleName" name="updateRuleName" placeholder="Enter existing rule name" required />
+              </div>
+              <div>
+                <label for="updatedRule">New rule : </label>
+                <input type="text" id="updatedRule" name="updatedRule" placeholder="Enter new rule : " />
+              </div>
+              <button type="submit">Update Rule</button>
+            </form>
+            <p id="updateRuleMessage"></p>
+          </section>
     </div>
 
-<section id="updateRuleSection">
-    <h2>Update Rule</h2>
-    <form id="updateRuleForm">
-      <div>
-        <label for="updateRuleName">Rule Name:</label>
-        <input type="text" id="updateRuleName" name="updateRuleName" placeholder="Enter existing rule name" required />
-      </div>
-      <div>
-        <label for="updatedRule">New rule : </label>
-        <input type="text" id="updatedRule" name="updatedRule" placeholder="Enter new rule : " />
-      </div>
-      <button type="submit">Update Rule</button>
-    </form>
-    <p id="updateRuleMessage"></p>
-  </section>
   
 
     <script src="script.js"></script>
