@@ -169,3 +169,68 @@ json
      ```
 
    - Returns whether the user data satisfies the rule (`True` or `False`).
+   - 
+
+   ## Instructions to Run the Application
+
+### Prerequisites
+
+- Ensure that you have Node.js installed on your system (version 14.x or higher is recommended).
+- Install MongoDB on your local machine or have access to a MongoDB cloud instance.
+
+### Step-by-Step Guide to Set Up and Run the Application
+
+1. **Clone the Repository**
+   - First, clone the project repository from GitHub:
+   
+     ```bash
+     git clone https://github.com/yourusername/your-repo-name.git
+     cd your-repo-name
+     ```
+
+2. **Install Backend Dependencies**
+   - Navigate to the backend directory (if your project is structured that way) and install the necessary Node.js packages:
+   
+     ```bash
+     npm install
+     ```
+
+3. **Configure MongoDB**
+   - Ensure MongoDB is running locally or update the MongoDB connection string in the `src/config/db.js` (or wherever your database connection is defined).
+   - Example MongoDB connection string in `db.js`:
+   
+     ```js
+     const mongoose = require('mongoose');
+     const mongoURI = 'mongodb://localhost:27017/ruleEngineDB'; // Replace with your MongoDB URI
+     ```
+
+4. **Run the Backend**
+   - Start the server by running the following command:
+   
+     ```bash
+     npm start
+     ```
+   - The backend server should now be running on `http://localhost:3333`.
+
+5. **Open the Frontend**
+   - Open the `index.html` file in your browser using the Live Server extension in Visual Studio Code or by manually opening it in a browser.
+   - The frontend will interact with the backend API running on `http://localhost:3333`.
+
+### API Endpoints
+
+- **POST /insert-rule**: Insert a new rule into the system.
+- **POST /combine-rules**: Combine two rules using an operator (AND/OR).
+- **POST /evaluate-rule**: Evaluate user data against a specific rule.
+- **POST /update-rule**: Update an existing rule in the system.
+
+### Example Requests
+
+1. **Insert a Rule**:
+   ```bash
+   curl -X POST http://localhost:3333/insert-rule \
+   -H "Content-Type: application/json" \
+   -d '{
+       "ruleName": "age_rule",
+       "rule": "age > 30"
+   }'
+
