@@ -52,7 +52,7 @@ json
      {
         "ruleName": "example_rule",
         "astString": "{\"type\":\"operator\",\"left\":{\"type\":\"operand\",\"field\":\"age\",\"comparator\":\">\",\"value\":30},\"right\":  {\"type\":\"operand\",\"field\":\"salary\",\"comparator\":\">\",\"value\":50000},\"operator\":\"AND\"}"
-}
+    }
   ```
 
 ### API Design
@@ -124,21 +124,18 @@ json
        "experience": 3
      }
      ```
-
    - Evaluates the rule against the user’s attributes.
    - Returns `True` if the user meets the rule criteria, otherwise returns `False`.
     
 4. **update_rule(JSON data)**: 
    - Takes a rule name and new rule to be inserted as the input, and inserts the updated rule into DB.
    - Example of input data: 
-   
      ```json     
      {
        "ruleName" : "Rule2" ,
        "updatedRule" : "age<30"  
     }
      ```
-     
 ## Instructions to Run the Application
 
 ### Prerequisites
