@@ -188,7 +188,8 @@ json
 - **POST /update-rule**: Update an existing rule in the system.
 
 ## Front-end##
-![image](https://github.com/user-attachments/assets/d3e86b25-40c6-416a-947e-34164245ebd3)
+![image](https://github.com/user-attachments/assets/94c02031-e09d-4546-a8c9-070bc9383480)
+![image](https://github.com/user-attachments/assets/8fa6bdb5-3050-445c-a1e7-c743cb5a243e)
 
-![image](https://github.com/user-attachments/assets/e2c30f8e-9069-46d7-9c3e-50c1dc3c4a9c)
+
 
