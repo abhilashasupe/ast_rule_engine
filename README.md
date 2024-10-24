@@ -43,18 +43,18 @@ json
 - **left**: Reference to another node (left child, for binary operators).
 - **right**: Reference to another node (right child, for binary operators).
 - **value**: For operand nodes, the value used for comparison (e.g., 25 for `age > 25`).
-### Data Storage
-
-- Define the choice of database for storing the rules and application metadata.
-- Example: MongoDB is used for storing AST representations as JSON strings.
+### Data Storage :  MongoDB is used for storing AST representations as JSON strings.
   
 #### Schema Example
 
 
-{
-  "ruleName": "example_rule",
-  "astString": "{\"type\":\"operator\",\"left\":{\"type\":\"operand\",\"field\":\"age\",\"comparator\":\">\",\"value\":30},\"right\":{\"type\":\"operand\",\"field\":\"salary\",\"comparator\":\">\",\"value\":50000},\"operator\":\"AND\"}"
+  ```json
+     {
+        "ruleName": "example_rule",
+        "astString": "{\"type\":\"operator\",\"left\":{\"type\":\"operand\",\"field\":\"age\",\"comparator\":\">\",\"value\":30},\"right\":  {\"type\":\"operand\",\"field\":\"salary\",\"comparator\":\">\",\"value\":50000},\"operator\":\"AND\"}"
 }
+  ```
+
 ### API Design
 
 1. **create_rule(rule_string)**: 
@@ -127,7 +127,7 @@ json
 
    - Evaluates the rule against the user’s attributes.
    - Returns `True` if the user meets the rule criteria, otherwise returns `False`.
-   - 
+    
 4. **update_rule(JSON data)**: 
    - Takes a rule name and new rule to be inserted as the input, and inserts the updated rule into DB.
    - Example of input data: 
@@ -138,9 +138,7 @@ json
        "updatedRule" : "age<30"  
     }
      ```
-
-   - Inserts updated rule into DB
-
+     
 ## Instructions to Run the Application
 
 ### Prerequisites
