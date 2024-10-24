@@ -127,90 +127,54 @@ json
 
    - Evaluates the rule against the user’s attributes.
    - Returns `True` if the user meets the rule criteria, otherwise returns `False`.
-
-#### Example API Endpoints
-
-1. **POST /insert-rule**
-   - Inserts a new rule in the AST form into the database.
-   - Request Body Example:
-   
-     ```json
-     {
-       "ruleName": "age_salary_rule",
-       "rule": "(age > 30 AND salary > 50000)"
-     }
-     ```
-
-2. **POST /combine-rules**
-   - Combines two existing rules using an operator (AND/OR).
-   - Request Body Example:
-   
-     ```json
-     {
-       "ruleName1": "age_rule",
-       "ruleName2": "salary_rule",
-       "operator": "AND",
-       "newRuleName": "combined_rule"
-     }
-     ```
-
-3. **POST /evaluate-rule**
-   - Evaluates the provided user data against the selected rule.
-   - Request Body Example:
-   
-     ```json
-     {
-       "ruleName": "combined_rule",
-       "userData": {
-         "age": 35,
-         "salary": 60000
-       }
-     }
-     ```
-
-   - Returns whether the user data satisfies the rule (`True` or `False`).
    - 
+4. **update_rule(JSON data)**: 
+   - Takes a rule name and new rule to be inserted as the input, and inserts the updated rule into DB.
+   - Example of input data: 
+   
+     ```json     
+     {
+       "ruleName" : "Rule2" ,
+       "updatedRule" : "age<30"  
+    }
+     ```
 
-   ## Instructions to Run the Application
+   - Inserts updated rule into DB
+
+## Instructions to Run the Application
 
 ### Prerequisites
 
-- Ensure that you have Node.js installed on your system (version 14.x or higher is recommended).
+- Ensure that you have Node.js installed on your system .
 - Install MongoDB on your local machine or have access to a MongoDB cloud instance.
 
 ### Step-by-Step Guide to Set Up and Run the Application
 
 1. **Clone the Repository**
-   - First, clone the project repository from GitHub:
-   
      ```bash
-     git clone https://github.com/yourusername/your-repo-name.git
-     cd your-repo-name
+     git clone https://github.com/abhilashasupe/ast_rule_engine.git
      ```
 
-2. **Install Backend Dependencies**
-   - Navigate to the backend directory (if your project is structured that way) and install the necessary Node.js packages:
-   
+2. **Install Backend Dependencies**   
      ```bash
      npm install
      ```
 
-3. **Configure MongoDB**
-   - Ensure MongoDB is running locally or update the MongoDB connection string in the `src/config/db.js` (or wherever your database connection is defined).
-   - Example MongoDB connection string in `db.js`:
-   
+3. **Configure MongoDB and put values in .env**
+   - Ensure MongoDB is running locally
+   -  
      ```js
-     const mongoose = require('mongoose');
-     const mongoURI = 'mongodb://localhost:27017/ruleEngineDB'; // Replace with your MongoDB URI
+     MONGO_URI = mongodb://0.0.0.0:27017/rule_engine 
+     PORT = 3333
      ```
 
 4. **Run the Backend**
-   - Start the server by running the following command:
+   - Start the server by going to the src folder and running the following command:
    
      ```bash
-     npm start
+     nodemon main.js
      ```
-   - The backend server should now be running on `http://localhost:3333`.
+   - The backend server should now be running on `http://localhost:PORT`.
 
 5. **Open the Frontend**
    - Open the `index.html` file in your browser using the Live Server extension in Visual Studio Code or by manually opening it in a browser.
@@ -218,19 +182,13 @@ json
 
 ### API Endpoints
 
-- **POST /insert-rule**: Insert a new rule into the system.
+- **POST /create-rule**: Insert a new rule into the system.
 - **POST /combine-rules**: Combine two rules using an operator (AND/OR).
 - **POST /evaluate-rule**: Evaluate user data against a specific rule.
 - **POST /update-rule**: Update an existing rule in the system.
 
-### Example Requests
+## Front-end##
+![image](https://github.com/user-attachments/assets/d3e86b25-40c6-416a-947e-34164245ebd3)
 
-1. **Insert a Rule**:
-   ```bash
-   curl -X POST http://localhost:3333/insert-rule \
-   -H "Content-Type: application/json" \
-   -d '{
-       "ruleName": "age_rule",
-       "rule": "age > 30"
-   }'
+![image](https://github.com/user-attachments/assets/e2c30f8e-9069-46d7-9c3e-50c1dc3c4a9c)
 
